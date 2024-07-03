@@ -1,0 +1,12 @@
+#mensagemAprovado {
+  color: rgb(33, 168, 33);
+}
+#mensagemReprovado {
+  color: red;
+}
+
+.situacaoAluno {
+  font-size: 16px;
+  text-align: center;
+  margin: auto;
+}
