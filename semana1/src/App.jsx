@@ -7,6 +7,8 @@ import Mensagem from "./components/Mensagem";
 import Navbar from "./components/Navbar";
 import CardAluno from "./components/CardAluno";
 import Products from "./components/Products";
+import Listagem from "./components/Listagem";
+import Banner from "./components/Banner";
 
 
 // Fragment: <>
@@ -15,14 +17,16 @@ import Products from "./components/Products";
 function App() {
     return (
         <>
-            <CardAluno nomeAluno = 'João Marcos'
+            {/* <CardAluno nomeAluno = 'João Marcos'
             serieAluno = '7º ano'
             mediaAluno = '6'
             />
             <Products desconto = {70}
             nomeProduto = 'Incrivel playstaixoooooon faive muito baratinho' 
-            precoOriginal = {5000}
-            />
+            precoOriginal = {5000} */}
+            {/* /> */}
+            {/* <Listagem /> */}
+            <Banner />
         </>
     )
 }
