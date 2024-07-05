@@ -1,5 +1,7 @@
 import './CardAluno.css'
-function CardAluno (props) {    
+function CardAluno (props) {  
+  
+  
   return (
 
     <main className='situacaoAluno'>
