@@ -9,6 +9,13 @@ import CardAluno from "./components/CardAluno";
 import Products from "./components/Products";
 import Listagem from "./components/Listagem";
 import Banner from "./components/Banner";
+import Eventos from "./components/Eventos";
+import Contador from "./components/Contador";
+import Abas from "./components/Abas";
+import Carrossel from "./components/Carrossel";
+import Calculadoraimc from "./components/Caulculadoraimc";
+import Post from "./components/Post";
+import ConversorTemperatura from "./components/ConversorTemperatura";
 
 
 // Fragment: <>
@@ -17,16 +24,9 @@ import Banner from "./components/Banner";
 function App() {
     return (
         <>
-            {/* <CardAluno nomeAluno = 'João Marcos'
-            serieAluno = '7º ano'
-            mediaAluno = '6'
-            />
-            <Products desconto = {70}
-            nomeProduto = 'Incrivel playstaixoooooon faive muito baratinho' 
-            precoOriginal = {5000} */}
-            {/* /> */}
-            {/* <Listagem /> */}
-            <Banner />
+        <Post />
+        <Post />
+        <ConversorTemperatura />
         </>
     )
 }
