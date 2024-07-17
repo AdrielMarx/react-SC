@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./config"
 
 // O proósito deste arquivo é ter todas as funções necessárias para gerenciar tarefas.
@@ -31,4 +31,25 @@ export async function getTarefas() {
   })
 
   return tarefas
+}
+
+export async function deleteTarefa(id) {
+  // Cria uma referência para o documento da coleção
+  const tarefaDoc = doc(tarefasCol, id)
+  // Deletar o documento da coleção de acordo com o id
+  await deleteDoc(tarefaDoc)
+}
+
+export async function getTarefa(id) {
+  // Cria uma referência para o documento da coleção
+  const tarefaDoc = doc(tarefasCol, id)
+  // Trazer as informações do documento
+  const snapshot = await getDoc(tarefaDoc)
+
+  return snapshot.data()
+}
+
+export async function updateTarefa(id, data) {
+  const tarefasDoc = doc(tarefasCol, id)
+  await updateDoc(tarefasDoc, data)
 }

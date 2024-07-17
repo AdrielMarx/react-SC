@@ -1,18 +1,33 @@
 import { Badge, Button, Card, CardBody, CardText, CardTitle, Container } from "react-bootstrap"
-import { Link } from "react-router-dom"
-import { getTarefas } from "../firebase/tarefas"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import { deleteTarefa, getTarefas } from "../firebase/tarefas"
 import { useEffect, useState } from "react"
 import Loader from "../components/Loader"
+import toast from "react-hot-toast";
 
 
 function Tarefas() {
   const [tarefas, setTarefas] = useState(null)
+
+  const navigate = useNavigate()
 
   function carregarDados() {
     // O then está devolvendo a lista de tarefas da coleção
     getTarefas().then((resultados) => {
       setTarefas(resultados)
     })
+  }
+
+  function deletarTarefa(id) {
+    // se for true -> vai apagar a tarefa, se for false -> não vai fazer nada
+    const deletar = confirm('Tem certeza?')
+    if (deletar) {
+      deleteTarefa(id).then(() => {
+        toast.success('Tarefa excluída com sucesso!')
+        // Vai trazer a lista de tarefas de novo, dessa vez sem a tarefa excluida
+        carregarDados()
+      })
+    }
   }
 
   // Executar uma função quando o componente é renderizado a primeira vez
@@ -38,8 +53,10 @@ function Tarefas() {
                       {tarefa.concluido ? <Badge bg='success'>Concluído</Badge> : <Badge bg='danger'>Pendente</Badge>}
                       <Badge>{tarefa.categoria}</Badge>
                     </div>
-                    <Button variant="dark">Editar</Button>
-                    <Button variant="danger">Excluir</Button>
+                    <Button variant="dark" onClick={() => {
+                      navigate(`/tarefas/editar/${tarefa.id}`)
+                    }}>Editar</Button>
+                    <Button variant="danger" onClick={() => deletarTarefa(tarefa.id)}>Excluir</Button>
                   </CardBody>
                 </Card>
               })

@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NovaTarefa from "./pages/NovaTarefa"
 import Tarefas from "./pages/Tarefas"
 import { Toaster } from "react-hot-toast"
+import EditarTarefa from "./pages/EditarTarefa"
 // BrowserRouter é o componente essencial para conduzir o roteamento no navegador
 // Route: indicamos a rota (route) e o elemento que será exibido na tela
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/tarefas" element={<Tarefas />}/>
           <Route path="/ajuda" element={<Ajuda />}/>
           <Route path="/tarefas/adicionar" element={<NovaTarefa />}/>
+          <Route path="/tarefas/editar/:id" element={<EditarTarefa />}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </BrowserRouter>
