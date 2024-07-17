@@ -1,21 +1,27 @@
 import { Badge, Button, Card, CardBody, CardText, CardTitle, Container } from "react-bootstrap"
 import { Link, Navigate, useNavigate } from "react-router-dom"
-import { deleteTarefa, getTarefas } from "../firebase/tarefas"
-import { useEffect, useState } from "react"
+import { deleteTarefa, getTarefasUsuario } from "../firebase/tarefas"
+import { useContext, useEffect, useState } from "react"
 import Loader from "../components/Loader"
 import toast from "react-hot-toast";
+import { UserContext } from "../contexts/UserContext"
 
 
 function Tarefas() {
   const [tarefas, setTarefas] = useState(null)
+  // Recuperamos a informação do usuário (se está ligado ou não)
+  const user = useContext(UserContext)
 
   const navigate = useNavigate()
 
   function carregarDados() {
-    // O then está devolvendo a lista de tarefas da coleção
-    getTarefas().then((resultados) => {
+    if(user) {
+      getTarefasUsuario(user.uid).then((resultados) => {
       setTarefas(resultados)
     })
+    }
+    // O then está devolvendo a lista de tarefas da coleção
+    
   }
 
   function deletarTarefa(id) {
@@ -35,6 +41,18 @@ function Tarefas() {
     carregarDados()
   }, []) // sintáxe do useEffect pede um array vazio
 
+  // Se o usuário não está logado
+  if (user === null) {
+    // Navegar para outra página
+    return <Navigate to="/login"/>
+  }
+
+  const categorias = {
+    'Estudos': 'primary',
+    'Lazer': 'warning',
+    'Trabalho': 'info',
+  }
+
   return (
     <main>
       <Container className="mt-5">
@@ -53,7 +71,7 @@ function Tarefas() {
                       {tarefa.concluido ? <Badge bg='success'>Concluído</Badge> : <Badge bg='danger'>Pendente</Badge>}
                       <Badge>{tarefa.categoria}</Badge>
                     </div>
-                    <Button variant="dark" onClick={() => {
+                    <Button variant={categorias[tarefa.categoria]} onClick={() => {
                       navigate(`/tarefas/editar/${tarefa.id}`)
                     }}>Editar</Button>
                     <Button variant="danger" onClick={() => deletarTarefa(tarefa.id)}>Excluir</Button>

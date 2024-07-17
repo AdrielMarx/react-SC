@@ -3,12 +3,22 @@ import { useForm } from "react-hook-form"
 import { addTarefa } from "../firebase/tarefas"
 import toast from "react-hot-toast"
 import { Navigate, useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { UserContext } from "../contexts/UserContext"
 
 function NovaTarefa() {
   const {register, handleSubmit, formState: {errors}} = useForm()
   const navigate = useNavigate()
 
+  const user = useContext(UserContext)
+
+  if (user === null) {
+    return <Navigate to="/login"/>
+  }
+
   function salvarTarefa(data) {
+    // Novo campo do documento que associa o usuário e tarefa que ele criou
+    data.idUsuario = user.uid
     addTarefa(data)
     .then(() => {
       // then aguarda a inserção da tarefa para ENTAO exibir o toast

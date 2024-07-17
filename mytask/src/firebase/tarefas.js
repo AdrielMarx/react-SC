@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, deleteDoc, getDoc, updateDoc, query, where } from "firebase/firestore";
 import { db } from "./config"
 
 // O proósito deste arquivo é ter todas as funções necessárias para gerenciar tarefas.
@@ -21,9 +21,22 @@ export async function addTarefa(data) {
   // await é uma isntrução para esperar o resultado de addDoc
 }
 
-export async function getTarefas() {
-  // Snapshot é o resultado da busca na coleção de tarefas
-  const snapshot = await getDocs(tarefasCol)
+// export async function getTarefas() {
+//   // Snapshot é o resultado da busca na coleção de tarefas
+//   const snapshot = await getDocs(tarefasCol)
+//   const tarefas = []
+
+//   snapshot.forEach(doc => {
+//     tarefas.push({...doc.data(), id: doc.id})
+//   })
+
+//   return tarefas
+// }
+
+export async function getTarefasUsuario(idUsuario) {
+  // Filtrar as tarefas da coleção de acordo com o id do usuário
+  const filter = query(tarefasCol, where('idUsuario', '==', idUsuario))
+  const snapshot = await getDocs(filter)
   const tarefas = []
 
   snapshot.forEach(doc => {
